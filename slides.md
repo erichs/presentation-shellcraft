@@ -640,8 +640,11 @@ F8:1E:DF:E6:A9:13
 @@@
 
 !SLIDE
-## composure demo
-### simple network monitor
+## composure
+
+![composure - public domain 2012](images/composure.png)
+
+### demo: simple network monitor
 
 [ascii.io (4 minutes)](http://ascii.io/a/476)
 
