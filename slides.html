@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>shellcraft</title>
+    <meta charset='utf-8' />
+    <meta content='width=1024, user-scalable=no' name='viewport' />
+    <!-- deck.js's core css -->
+    <link href="deck.js/core/deck.core.css" rel="stylesheet" type="text/css"/>
+    <!-- deck.js extension CSS files -->
+    <link href="deck.js/extensions/codemirror/deck.codemirror.css" rel="stylesheet" type="text/css"/>
+    <link href="deck.js/extensions/goto/deck.goto.css" rel="stylesheet" type="text/css"/>
+    <link href="deck.js/extensions/hash/deck.hash.css" rel="stylesheet" type="text/css"/>
+    <link href="deck.js/extensions/menu/deck.menu.css" rel="stylesheet" type="text/css"/>
+    <link href="deck.js/extensions/navigation/deck.navigation.css" rel="stylesheet" type="text/css"/>
+    <link href="deck.js/extensions/presenterview/deck.presenterview.css" rel="stylesheet" type="text/css"/>
+    <link href="deck.js/extensions/scale/deck.scale.css" rel="stylesheet" type="text/css"/>
+    <link href="deck.js/extensions/status/deck.status.css" rel="stylesheet" type="text/css"/>
+    <!-- all css in the css dir: Keydown CSS, your custom CSS, and themes from deck.js -->
+    <link href="css/keydown.css" rel="stylesheet" type="text/css"/>
+    <link href="css/deck.presenterview.css" rel="stylesheet" type="text/css"/>
+    <link href="css/default.css" rel="stylesheet" type="text/css"/>
+    <link href="css/horizontal-slide.css" rel="stylesheet" type="text/css"/>
+    <link href="css/shellcraft.css" rel="stylesheet" type="text/css"/>
+    <link href="css/swiss.css" rel="stylesheet" type="text/css"/>
+    <!-- Modernizr (provided for legacy browsers) -->
+    <script src="deck.js/support/modernizr.custom.js" type="text/javascript"></script>
+  </head>
+  <body class='deck-container keydown'>
+    <section class='slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h1>Shellcraft</h1>
+        
+        <h2>building a better command line</h2>
+        
+        <p><img src="images/shell.jpg" alt="Shell - public domain" /></p>
+        
+        <h3>(an apology for Unix)</h3>
+        
+        <h3><a href="http://github.com/erichs">@erichs</a>/GitHub</h3>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='left slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h2>Unix is famously difficult to master...</h2>
+        
+        <ul>
+        <li>steep learning curve</li>
+        <li>arcane, terse commands</li>
+        <li>not user friendly</li>
+        </ul>
+        
+        
+        <blockquote><p>Unix never says 'please'.</p>
+        
+        <p>-- Rob Pike</p></blockquote>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h2>yet, it's often the most powerful tool.</h2>
+        
+        <p><img src="images/chainsaw.jpg" alt="Unix Chainsaw- © CC- (?) 2006 Klemens Steinhauser" /></p>
+        
+        <h3>Gary Bernhardt - The Unix chainsaw</h3>
+        
+        <p>Unix hasnt killed anyone. Yet.</p>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='left slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h2>The Unix philosophy:</h2>
+        
+        <blockquote><p>Write programs that do one thing and do it well.</p>
+        
+        <p>Write programs to work together.</p>
+        
+        <p>Write programs to handle text streams, because that is a universal interface.</p>
+        
+        <p>&nbsp;</p>
+        
+        <p>-- Doug McIlroy, the inventor of Unix pipes</p></blockquote>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='left slide'>
+  <div class='spacer top'></div>
+  <div class='content'>
+    <h2>what do you mean, shell?</h2>
+
+<ul>
+<li>CLI - command interpreter, exposes operating system</li>
+<li>script interpreter - programming interface, batches commands</li>
+</ul>
+
+
+<p><img src="images/zsh.png" alt="zsh - © CC- (?) 2012 Nirakka" /></p>
+  </div>
+  <div class='spacer bottom'></div>
+</section>
+    <section class='left slide'>
+  <div class='spacer top'></div>
+  <div class='content'>
+    <h2>example: what's my MAC address?</h2>
+    
+    <p><textarea class='code' display='none' mode='shell'>$ ifconfig en1&#x000A;&#x000A;en1: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500&#x000A;        ether f8:1e:df:e6:a9:13&#x000A;        inet 10.80.80.240 netmask 0xffff0000 broadcast 10.80.255.255&#x000A;        media: autoselect&#x000A;        status: active</textarea>
+</p>
+  </div>
+  <div class='spacer bottom'></div>
+</section>
+    <section class='left slide'>
+  <div class='spacer top'></div>
+  <div class='content'>
+    <h2>example: what's my MAC address?</h2>
+
+<p><textarea class='code' display='none' mode='shell'>$ ifconfig en1 | grep ether&#x000A;&#x000A;      ether f8:1e:df:e6:a9:13</textarea>
+</p>
+
+<p>'grep' shows only lines that contain some matching expression.</p>
+  </div>
+  <div class='spacer bottom'></div>
+</section>
+    <section class='left slide'>
+  <div class='spacer top'></div>
+  <div class='content'>
+    <h2>example: what's my MAC address?</h2>
+    
+    <p><textarea class='code' display='none' mode='shell'>$ ifconfig en1 | grep ether | awk '{print $NF}'&#x000A;&#x000A;f8:1e:df:e6:a9:13</textarea>
+</p>
+    
+    <p>'awk' is grep on steroids.</p>
+  </div>
+  <div class='spacer bottom'></div>
+</section>
+    <section class='left slide'>
+  <div class='spacer top'></div>
+  <div class='content'>
+    <h2>example: what's my MAC address?</h2>
+    
+    <p><textarea class='code' display='none' mode='shell'>$ ifconfig en1 | grep ether | awk '{print $NF}' | tr '[:lower:]' '[:upper:]'&#x000A;&#x000A;F8:1E:DF:E6:A9:13</textarea>
+</p>
+    
+    <p>'tr' <em>translates</em> one set of characters to another.</p>
+  </div>
+  <div class='spacer bottom'></div>
+</section>
+    <section class='slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h2>mac address demo</h2>
+        
+        <p><a href="http://ascii.io/a/1026">ascii.io (32 seconds)</a></p>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='left slide'>
+  <div class='spacer top'></div>
+  <div class='content'>
+    <h2>strengths of the Unix model</h2>
+    
+    <p><textarea class='code' display='none' mode='shell'>$ ifconfig en1 | grep ether | awk '{print $NF}' | tr '[:lower:]' '[:upper:]'</textarea>
+</p>
+    
+    <h3>strengths</h3>
+    
+    <ul>
+    <li>easy to assemble</li>
+    <li>infinitely flexible</li>
+    <li>easy to reason about</li>
+    </ul>
+  </div>
+  <div class='spacer bottom'></div>
+</section>
+    <section class='left slide'>
+  <div class='spacer top'></div>
+  <div class='content'>
+    <h2>strengths are also weaknesses</h2>
+    
+    <p><textarea class='code' display='none' mode='shell'>$ ifconfig en1 | grep ether | awk '{print $NF}' | tr '[:lower:]' '[:upper:]'</textarea>
+</p>
+    
+    <table style='width: 100%'>
+    <tr>
+    <td>
+    
+    <h3>strength</h3>
+    <ul>
+    <li>easy to assemble</li>
+    <li>infinitely flexible</li>
+    <li>easy to reason about</li>
+    </ul>
+    
+    </td>
+    <td width="200px">&nbsp;</td>
+    <td>
+    
+    <h3>weakness</h3>
+    <ul>
+    <li class="slide">hard to read</li>
+    <li class="slide">some assembly is always required</li>
+    <li class="slide">transformations are opaque</li>
+    </ul>
+    
+    </td>
+    </tr>
+    </table>
+  </div>
+  <div class='spacer bottom'></div>
+</section>
+    <section class='left slide'>
+  <div class='spacer top'></div>
+  <div class='content'>
+    <h2>fixating on weakness becomes limitation</h2>
+
+<p><textarea class='code' display='none' mode='shell'>$ ifconfig en1 | grep ether | awk '{print $NF}' | tr '[:lower:]' '[:upper:]'</textarea>
+</p>
+
+<table style='width: 100%'>
+<tr>
+<td>
+
+<h3>weakness</h3>
+<ul>
+<li>hard to read</li>
+<li>some assembly is always required</li>
+<li>transformations are opaque</li>
+</ul>
+
+</td>
+<td width="200px">&nbsp;</td>
+<td>
+
+<h3>limiting belief</h3>
+<ul>
+<li class="slide">shell scripts are ugly</li>
+<li class="slide">Unix shell isn't REAL programming</li>
+<li class="slide">good for throw-away code</li>
+</ul>
+
+</td>
+</tr>
+</table>
+  </div>
+  <div class='spacer bottom'></div>
+</section>
+    <section class='left slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h2>changing POV</h2>
+        
+        <p>Bernhardt's talk inspired me to revisit my approach to using the shell.</p>
+        
+        <p>&nbsp;</p>
+        
+        <p>Insight:</p>
+        
+        <h3>statements freeze perspectives, questions open them up.</h3>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h2>jedi mind trick: inverting limits</h2>
+        
+        <p><img src="images/AURYN.png" alt="AURYN - © CC- (?) 2000 Tropican" /></p>
+        
+        <h3>invert a limiting belief, and turn it into an open-ended question</h3>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='left slide'>
+  <div class='spacer top'></div>
+  <div class='content'>
+    <h2>inverting limits</h2>
+
+<p><textarea class='code' display='none' mode='shell'>$ ifconfig en1 | grep ether | awk '{print $NF}' | tr '[:lower:]' '[:upper:]'</textarea>
+</p>
+
+<table style='width: 100%'>
+<tr>
+<td>
+
+<h3>limiting belief</h3>
+<ul>
+<li>shell scripts are ugly</li>
+<li>Unix shell isn't REAL programming</li>
+<li>good for throw-away code</li>
+</ul>
+
+</td>
+<td width="200px">&nbsp;</td>
+<td>
+
+<h3>empowering question</h3>
+<ul>
+<li class="slide">what would beautiful shell look like?</li>
+<li class="slide">what if it were easier to apply modern coding practices?</li>
+<li class="slide">what if shell programs  were always available for refactoring?</li>
+</ul>
+
+</td>
+</tr>
+</table>
+  </div>
+  <div class='spacer bottom'></div>
+</section>
+    <section class='left slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h2>empowering question</h2>
+        
+        <p><strong>what would beautiful shell look like?</strong></p>
+        
+        <ul>
+        <li>readable</li>
+        <li>understandable</li>
+        <li>documented</li>
+        </ul>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='left slide'>
+  <div class='spacer top'></div>
+  <div class='content'>
+    <h2>composed method</h2>
+
+<p>striving for <strong>readable</strong>, <strong>understandable</strong> code often results in many small, well-named methods.</p>
+
+<p>-what Kent Beck refers to as the <em>Composed Method</em> pattern</p>
+  </div>
+  <div class='spacer bottom'></div>
+</section>
+    <section class='left slide'>
+  <div class='spacer top'></div>
+  <div class='content'>
+    <p>&nbsp;</p>
+    
+    <h2>apply composed method</h2>
+    
+    <h3>before</h3>
+    
+    <p><textarea class='code' display='none' mode='shell'>$ ifconfig en1 | grep ether | awk '{print $NF}' | tr '[:lower:]' '[:upper:]'</textarea>
+</p>
+    
+    <h3>after</h3>
+    
+    <p><textarea class='code' display='none' mode='shell'>get_mac_address () {&#x000A;  ifconfig $1 | grep ether | lastcol | uppercase&#x000A;}&#x000A;&#x000A;lastcol () {&#x000A;  awk '{ print $NF }'&#x000A;}&#x000A;&#x000A;uppercase () {&#x000A;  tr '[:lower:]' '[:upper:]'&#x000A;}&#x000A;&#x000A;$ get_mac_address en1&#x000A;&#x000A;F8:1E:DF:E6:A9:13</textarea>
+</p>
+  </div>
+  <div class='spacer bottom'></div>
+</section>
+    <section class='left slide'>
+  <div class='spacer top'></div>
+  <div class='content'>
+    <h2>composed method</h2>
+
+<p><textarea class='code' display='none' mode='shell'>get_mac_address () {&#x000A;  ifconfig $1 | grep ether | lastcol | uppercase&#x000A;}&#x000A;&#x000A;lastcol () {&#x000A;  awk '{ print $NF }'&#x000A;}&#x000A;&#x000A;uppercase () {&#x000A;  tr '[:lower:]' '[:upper:]'&#x000A;}</textarea>
+</p>
+
+<h3>benefits</h3>
+
+<ul>
+<li>uses intention-revealing names</li>
+<li>drops clues regarding data transformations</li>
+<li>promotes code reuse</li>
+</ul>
+  </div>
+  <div class='spacer bottom'></div>
+</section>
+    <section class='left slide'>
+  <div class='spacer top'></div>
+  <div class='content'>
+    <h2>reality check</h2>
+
+<h3>why aren't all shell commands composed in this style?</h3>
+
+<p>&nbsp;</p>
+
+<p>tensions between <em>interactive</em> CLI and <em>batch</em> script interpreter:</p>
+
+<ul>
+<li>feedback- REPL prints intermediate results that scripts lack</li>
+<li>editing context- prompt (1D) vs text editor (2D)</li>
+</ul>
+  </div>
+  <div class='spacer bottom'></div>
+</section>
+    <section class='left slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h2>two environments, two adaptations</h2>
+        
+        <ul>
+        <li><p>interactive CLI is the native habitat for building up pipelines</p></li>
+        <li><p>non-interactive script files are the native habitat for shell functions</p></li>
+        </ul>
+        
+        
+        <p>&nbsp;</p>
+        
+        <h3>can we have the best of both worlds?</h3>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='left slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h2>empowering question, revised</h2>
+        
+        <p><strong>what if it were easier to <sup> ^ interactively</sup> <strike>apply modern coding practices</strike> compose shell functions?</strong></p>
+        
+        <h3>blur the lines between prompt and script</h3>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='left slide'>
+  <div class='spacer top'></div>
+  <div class='content'>
+    <h2>draft functions from command line</h2>
+    
+    <p><textarea class='code' display='none' mode='shell'>$ ifconfig en1 | grep ether |  awk '{ print $NF }'&#x000A;&#x000A;00:0b:db:93:0a:08&#x000A;&#x000A;$ draft get_mac_address&#x000A;&#x000A;$ get_mac_address&#x000A;&#x000A;00:0b:db:93:0a:08</textarea>
+</p>
+  </div>
+  <div class='spacer bottom'></div>
+</section>
+    <section class='left slide'>
+  <div class='spacer top'></div>
+  <div class='content'>
+    <h2>revise functions from command line</h2>
+    
+    <p><textarea class='code' display='none' mode='shell'>$ revise get_mac_address</textarea>
+</p>
+    
+    <h3>opens definition in text editor</h3>
+    
+    <p><textarea class='code' display='none' mode='shell'>get_mac_address ()&#x000A;{&#x000A;  ifconfig $1 | grep ether |  awk '{ print $NF }'&#x000A;}</textarea>
+</p>
+    
+    <h3>re-loads function into memory on save</h3>
+    
+    <p><textarea class='code' display='none' mode='shell'>$ get_mac_address en1&#x000A;&#x000A;00:0b:db:93:0a:08</textarea>
+</p>
+  </div>
+  <div class='spacer bottom'></div>
+</section>
+    <section class='left slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h2>draft / revise</h2>
+        
+        <h3>use draft() and revise() for <strong>interactive-style function composition</strong> from the prompt</h3>
+        
+        <p><a href="http://ascii.io/a/1027">ascii.io (1:18)</a></p>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='left slide'>
+  <div class='spacer top'></div>
+  <div class='content'>
+    <h2>empowering question</h2>
+
+<p><strong>what if shell programs were always available for refactoring?</strong></p>
+
+<ul>
+<li>never throw code away</li>
+<li>automatic, transparent versioning</li>
+<li>quickly re-open functions for revision</li>
+</ul>
+  </div>
+  <div class='spacer bottom'></div>
+</section>
+    <section class='left slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h2>local Git repository</h2>
+        
+        <h3>draft() and revise() auto-commit with local Git repo</h3>
+        
+        <ul>
+        <li>function persistence across shell sessions</li>
+        <li>revisions available via normal git commands</li>
+        <li>share functions with team via shared repo access</li>
+        </ul>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='left slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h2>empowering question</h2>
+        
+        <p><strong>what would beautiful shell look like?</strong></p>
+        
+        <ul>
+        <li>readable</li>
+        <li>understandable</li>
+        <li><strong>documented???</strong></li>
+        </ul>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='left slide'>
+  <div class='spacer top'></div>
+  <div class='content'>
+    <h2>towards better documentation</h2>
+    
+    <p>Comments are helpful. Shell scripts allow them, but in-memory functions don't.</p>
+    
+    <p><textarea class='code' display='none' mode='shell'>$ foo () {&#x000A;    # this is a comment&#x000A;    echo 'foo'&#x000A;}&#x000A;&#x000A;$ typeset -f foo&#x000A;&#x000A;foo () {&#x000A;    echo 'foo'&#x000A;}</textarea>
+</p>
+  </div>
+  <div class='spacer bottom'></div>
+</section>
+    <section class='left slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h2>towards better documentation</h2>
+        
+        <h3>A sneaky shell comment would:</h3>
+        
+        <ul>
+        <li>be a valid shell statement</li>
+        <li>allow arbitrary text as arguments</li>
+        <li>have zero side effects</li>
+        </ul>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='left slide'>
+  <div class='spacer top'></div>
+  <div class='content'>
+    <h2>null command, :</h2>
+    
+    <blockquote><p>Since the values passed on the command line of the null command are ignored, the null command can be used as a comment.</p></blockquote>
+    
+    <p><textarea class='code' display='none' mode='shell'>: This is a comment</textarea>
+</p>
+    
+    <blockquote><p>However, there is no advantage to using this--it is more of a novelty than a practical technique.</p>
+    
+    <p>&nbsp;</p>
+    
+    <p>Blinn, 205</p></blockquote>
+  </div>
+  <div class='spacer bottom'></div>
+</section>
+    <section class='left slide'>
+  <div class='spacer top'></div>
+  <div class='content'>
+    <h2>a personal challenge</h2>
+    
+    <p><textarea class='code' display='none' mode='shell'>REM () {&#x000A;    :&#x000A;}&#x000A;&#x000A;foo () {&#x000A;    REM 'a BASIC remark'&#x000A;    echo 'foo'&#x000A;}&#x000A;&#x000A;$ typeset -f foo&#x000A;&#x000A;foo () {&#x000A;    REM 'a BASIC remark'&#x000A;    echo 'foo'&#x000A;}</textarea>
+</p>
+  </div>
+  <div class='spacer bottom'></div>
+</section>
+    <section class='left slide'>
+  <div class='spacer top'></div>
+  <div class='content'>
+    <h2>more than a comment</h2>
+    
+    <p><textarea class='code' display='none' mode='shell'>REM () {&#x000A;    :&#x000A;}</textarea>
+</p>
+    
+    <h3>features</h3>
+    
+    <ul>
+    <li>function names are arbitrary</li>
+    <li>create as many as you need</li>
+    <li>simplest possible shell function</li>
+    <li>retrievable at run-time</li>
+    </ul>
+  </div>
+  <div class='spacer bottom'></div>
+</section>
+    <section class='left slide'>
+  <div class='spacer top'></div>
+  <div class='content'>
+    <h2>run-time introspection</h2>
+    
+    <p><textarea class='code' display='none' mode='shell'>$ typeset -f foo&#x000A;&#x000A;foo () {&#x000A;    REM 'a BASIC remark'&#x000A;    echo 'foo'&#x000A;}&#x000A;&#x000A;$ typeset -f foo | grep REM | lastcol&#x000A;&#x000A;'a BASIC remark'</textarea>
+</p>
+  </div>
+  <div class='spacer bottom'></div>
+</section>
+    <section class='slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h2>functional metadata</h2>
+        
+        <h3>key/value metadata for shell functions!</h3>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='left slide'>
+  <div class='spacer top'></div>
+  <div class='content'>
+    <h2>establish keyword convention</h2>
+    
+    <p><textarea class='code' display='none' mode='shell'># cite() magically builds metadata functions&#x000A;&#x000A;cite about author example group param version</textarea>
+</p>
+  </div>
+  <div class='spacer bottom'></div>
+</section>
+    <section class='left slide'>
+  <div class='spacer top'></div>
+  <div class='content'>
+    <h2>get_mac_address, reprised</h2>
+    
+    <p><textarea class='code' display='none' mode='shell'>get_mac_address () {&#x000A;    about 'retrieves mac address for a given network interface'&#x000A;    param '1: network interface'&#x000A;    example '$ get_mac_address en1'&#x000A;    group 'network'&#x000A;&#x000A;    ifconfig $1 | grep ether | lastcol | uppercase&#x000A;  }</textarea>
+</p>
+  </div>
+  <div class='spacer bottom'></div>
+</section>
+    <section class='left slide'>
+  <div class='spacer top'></div>
+  <div class='content'>
+    <h2>get_mac_address, reprised</h2>
+    
+    <p><textarea class='code' display='none' mode='shell'>lastcol () {&#x000A; about 'prints the last column of space-delimited text data'&#x000A; example '$ echo "1 2 3" | lastcol   # prints "3"'&#x000A; group 'filters'&#x000A;&#x000A; awk '{ print $NF }'&#x000A;}</textarea>
+</p>
+  </div>
+  <div class='spacer bottom'></div>
+</section>
+    <section class='left slide'>
+  <div class='spacer top'></div>
+  <div class='content'>
+    <h2>get_mac_address, reprised</h2>
+    
+    <p><textarea class='code' display='none' mode='shell'>uppercase () {&#x000A;  about 'converts lowercase characters to uppercase'&#x000A;  example '$ echo "abc" | uppercase   # prints "ABC"'&#x000A;  group 'filters'&#x000A;&#x000A;  tr '[:lower:]' '[:upper:]'&#x000A;}</textarea>
+</p>
+  </div>
+  <div class='spacer bottom'></div>
+</section>
+    <section class='left slide'>
+  <div class='spacer top'></div>
+  <div class='content'>
+    <h2>putting metadata to work</h2>
+    
+    <p><textarea class='code' display='none' mode='shell'>$ reference get_mac_address&#x000A;&#x000A;get_mac_address     retrieves mac address for a given network interface&#x000A;parameters:&#x000A;                    1: network interface&#x000A;examples:&#x000A;                    $ get_mac_address en1</textarea>
+</p>
+    
+    <h3>use case: api reference</h3>
+  </div>
+  <div class='spacer bottom'></div>
+</section>
+    <section class='left slide'>
+  <div class='spacer top'></div>
+  <div class='content'>
+    <h2>putting metadata to work</h2>
+    
+    <p><textarea class='code' display='none' mode='shell'>$ glossary filters&#x000A;&#x000A;lastcol             prints the last column of space-delimited text data&#x000A;uppercase           converts lowercase characters to uppercase</textarea>
+</p>
+    
+    <h3>use case: list commands by group</h3>
+  </div>
+  <div class='spacer bottom'></div>
+</section>
+    <section class='left slide'>
+  <div class='spacer top'></div>
+  <div class='content'>
+    <h2>putting metadata to work</h2>
+    
+    <p><textarea class='code' display='none' mode='shell'>$ all_groups&#x000A;&#x000A;filters&#x000A;network</textarea>
+</p>
+    
+    <h3>use case: list available groups</h3>
+  </div>
+  <div class='spacer bottom'></div>
+</section>
+    <section class='left slide'>
+  <div class='spacer top'></div>
+  <div class='content'>
+    <h2>persist shell functions with metadata</h2>
+    
+    <p><textarea class='code' display='none' mode='shell'>$ write get_mac_address lastcol uppercase > getmac.sh&#x000A;$ echo "get_mac_address $1" >> getmac.sh&#x000A;$ sh ./getmac.sh en1&#x000A;&#x000A;F8:1E:DF:E6:A9:13</textarea>
+</p>
+  </div>
+  <div class='spacer bottom'></div>
+</section>
+    <section class='slide'>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h2>composure demo</h2>
+        
+        <h3>simple network monitor</h3>
+        
+        <p><a href="http://ascii.io/a/476">ascii.io (4 minutes)</a></p>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
+    <section class='left slide'>
+  <div class='spacer top'></div>
+  <div class='content'>
+    <h2>links</h2>
+
+<h3>blogs</h3>
+
+<p><a href="http://destroyallsoftware.com">Gary Bernhardt</a></p>
+
+<p><a href="http://www.threeriversinstitute.org/blog/">Kent Beck</a></p>
+
+<p><a href="http://martinfowler.com/">Martin Fowler</a></p>
+
+<h3>reference</h3>
+
+<p><a href="http://www.confreaks.com/videos/615-cascadiaruby2011-the-unix-chainsaw">The Unix Chainsaw (31 minutes)</a></p>
+
+<p><a href="http://amzn.com/0134514947">Blinn, Bruce. <em>Portable Shell Programming</em>. New Jersey: Prentice Hall, 1996.</a></p>
+
+<h3>tools</h3>
+
+<p><a href="https://github.com/erichs/composure">erichs/composure</a></p>
+
+<p><a href="http://rtomayko.github.com/shocco/">shocco - literate shell documentation</a></p>
+  </div>
+  <div class='spacer bottom'></div>
+</section>
+    <!-- deck.js navigation extension -->
+    <a class='deck-prev-link' href='#' title='Previous'>&#8592;</a>
+    <a class='deck-next-link' href='#' title='Next'>&#8594;</a>
+    <!-- deck.js hash extension -->
+    <a class='deck-permalink' href='.' title='Permalink to this slide'>#</a>
+    <!-- deck.js status extension -->
+    <p class='deck-status'>
+      <span class='deck-status-current'></span>
+      /
+      <span class='deck-status-total'></span>
+    </p>
+    <!-- jQuery & deck.js -->
+    <script src="deck.js/support/jquery.1.6.4.min.js" type="text/javascript"></script>
+    <script src="deck.js/core/deck.core.js" type="text/javascript"></script>
+    <!-- deck.js extension JS files -->
+    <script src="deck.js/extensions/codemirror/codemirror.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/deck.codemirror.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/clike/clike.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/clojure/clojure.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/coffeescript/coffeescript.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/css/css.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/diff/diff.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/haskell/haskell.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/htmlmixed/htmlmixed.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/javascript/javascript.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/lua/lua.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/perl/perl.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/php/php.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/plsql/plsql.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/python/python.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/r/r.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/rst/rst.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/ruby/ruby.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/scheme/scheme.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/shell/shell.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/smalltalk/smalltalk.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/sparql/sparql.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/stex/stex.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/velocity/velocity.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/xml/xml.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/xmlpure/xmlpure.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/codemirror/mode/yaml/yaml.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/goto/deck.goto.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/hash/deck.hash.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/menu/deck.menu.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/navigation/deck.navigation.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/presenterview/deck.presenterview.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/presenterview/presenterwindow.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/scale/deck.scale.js" type="text/javascript"></script>
+    <script src="deck.js/extensions/status/deck.status.js" type="text/javascript"></script>
+    <!-- your custom JS here, including call to initialize deck.js-codemirror -->
+    <script src="js/shellcraft.js" type="text/javascript"></script>
+    <!-- Initialize the deck. -->
+    <script type='text/javascript'>
+      $(function() { $.deck('.slide'); });
+    </script>
+  </body>
+</html>
