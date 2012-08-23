@@ -122,7 +122,7 @@ en1: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
 !SLIDE
 ## mac address demo
 
-[ascii.io (32 seconds)](http://ascii.io/a/1026)
+[ascii.io (30 seconds)](http://ascii.io/a/1035)
 
 !SLIDE left
 ## strengths of the Unix model
@@ -403,7 +403,7 @@ $ get_mac_address en1
 
 ### use draft() and revise() for **interactive-style function composition** from the prompt
 
-[ascii.io (1:18)](http://ascii.io/a/1027)
+[ascii.io (1:18)](http://ascii.io/a/1036)
 
 !SLIDE left
 ## empowering question
