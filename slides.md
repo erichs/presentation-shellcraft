@@ -60,11 +60,13 @@ Unix hasnt killed anyone. Yet.
 >
 > &nbsp;
 >
-> -- Doug McIlroy, the inventor of Unix pipes
+> -- Doug McIlroy, the inventor of Unix pipes (1972)
 
 !SLIDE left
 
 ## what do you mean, shell?
+
+### servant of two masters
 
 * CLI - command interpreter, exposes operating system
 * script interpreter - programming interface, batches commands
