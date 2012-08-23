@@ -42,9 +42,26 @@
       <div class='spacer bottom'></div>
     </section>
     <section class='left slide'>
+  <div class='spacer top'></div>
+  <div class='content'>
+    <h2>what do you mean, shell?</h2>
+
+<h3>servant of two masters</h3>
+
+<ul>
+<li>CLI - command interpreter, exposes operating system</li>
+<li>script interpreter - programming interface, batches commands</li>
+</ul>
+
+
+<p><img src="images/bash.png" alt="bash - public domain" /></p>
+  </div>
+  <div class='spacer bottom'></div>
+</section>
+    <section class='left slide'>
       <div class='spacer top'></div>
       <div class='content'>
-        <h2>Unix is famously difficult to master...</h2>
+        <h2>Unix shell is famously difficult to master...</h2>
         
         <ul>
         <li>steep learning curve</li>
@@ -90,28 +107,20 @@
       <div class='spacer bottom'></div>
     </section>
     <section class='left slide'>
-  <div class='spacer top'></div>
-  <div class='content'>
-    <h2>what do you mean, shell?</h2>
-
-<h3>servant of two masters</h3>
-
-<ul>
-<li>CLI - command interpreter, exposes operating system</li>
-<li>script interpreter - programming interface, batches commands</li>
-</ul>
-
-
-<p><img src="images/zsh.png" alt="zsh - © CC- (?) 2012 Nirakka" /></p>
-  </div>
-  <div class='spacer bottom'></div>
-</section>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h2>pipes - Unix's killer app</h2>
+        
+        <p><img src="images/pipeline.png" alt="Unix Pipelines - public domain, wikimedia 2009 TylzaeL" /></p>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
     <section class='left slide'>
   <div class='spacer top'></div>
   <div class='content'>
     <h2>example: what's my MAC address?</h2>
     
-    <p><textarea class='code' display='none' mode='shell'>$ ifconfig en1&#x000A;&#x000A;en1: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500&#x000A;        ether f8:1e:df:e6:a9:13&#x000A;        inet 10.80.80.240 netmask 0xffff0000 broadcast 10.80.255.255&#x000A;        media: autoselect&#x000A;        status: active</textarea>
+    <p><textarea class='code' display='none' mode='shell'>$ ifconfig eth0&#x000A;&#x000A;eth0      Link encap:Ethernet  HWaddr f8:1e:df:e6:a9:13&#x000A;          inet addr:10.80.100.35  Bcast:10.80.100.255  Mask:255.255.0.0&#x000A;          inet6 addr: fe80::20b:dbff:fe93:a08/64 Scope:Link&#x000A;          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1&#x000A;          RX packets:408752002 errors:0 dropped:0 overruns:0 frame:0&#x000A;          TX packets:388745488 errors:0 dropped:0 overruns:0 carrier:0&#x000A;          collisions:0 txqueuelen:1000&#x000A;          RX bytes:123203059 (123.2 MB)  TX bytes:2194999939 (2.1 GB)&#x000A;          Interrupt:16</textarea>
 </p>
   </div>
   <div class='spacer bottom'></div>
@@ -121,7 +130,7 @@
   <div class='content'>
     <h2>example: what's my MAC address?</h2>
 
-<p><textarea class='code' display='none' mode='shell'>$ ifconfig en1 | grep ether&#x000A;&#x000A;      ether f8:1e:df:e6:a9:13</textarea>
+<p><textarea class='code' display='none' mode='shell'>$ ifconfig eth0 | grep HWaddr&#x000A;&#x000A;eth0      Link encap:Ethernet  HWaddr f8:1e:df:e6:a9:13</textarea>
 </p>
 
 <p>'grep' shows only lines that contain some matching expression.</p>
@@ -133,7 +142,7 @@
   <div class='content'>
     <h2>example: what's my MAC address?</h2>
     
-    <p><textarea class='code' display='none' mode='shell'>$ ifconfig en1 | grep ether | awk '{print $NF}'&#x000A;&#x000A;f8:1e:df:e6:a9:13</textarea>
+    <p><textarea class='code' display='none' mode='shell'>$ ifconfig eth0 | grep HWaddr | awk '{print $NF}'&#x000A;&#x000A;f8:1e:df:e6:a9:13</textarea>
 </p>
     
     <p>'awk' is grep on steroids.</p>
@@ -145,7 +154,7 @@
   <div class='content'>
     <h2>example: what's my MAC address?</h2>
     
-    <p><textarea class='code' display='none' mode='shell'>$ ifconfig en1 | grep ether | awk '{print $NF}' | tr '[:lower:]' '[:upper:]'&#x000A;&#x000A;F8:1E:DF:E6:A9:13</textarea>
+    <p><textarea class='code' display='none' mode='shell'>$ ifconfig eth0 | grep HWaddr | awk '{print $NF}' | tr '[:lower:]' '[:upper:]'&#x000A;&#x000A;F8:1E:DF:E6:A9:13</textarea>
 </p>
     
     <p>'tr' <em>translates</em> one set of characters to another.</p>
@@ -155,9 +164,7 @@
     <section class='slide'>
       <div class='spacer top'></div>
       <div class='content'>
-        <h2>mac address demo</h2>
-        
-        <p><a href="http://ascii.io/a/1035">ascii.io (30 seconds)</a></p>
+        <h2>demo: mac address</h2>
       </div>
       <div class='spacer bottom'></div>
     </section>
@@ -166,7 +173,7 @@
   <div class='content'>
     <h2>strengths of the Unix model</h2>
     
-    <p><textarea class='code' display='none' mode='shell'>$ ifconfig en1 | grep ether | awk '{print $NF}' | tr '[:lower:]' '[:upper:]'</textarea>
+    <p><textarea class='code' display='none' mode='shell'>$ ifconfig eth0 | grep HWaddr | awk '{print $NF}' | tr '[:lower:]' '[:upper:]'</textarea>
 </p>
     
     <h3>strengths</h3>
@@ -184,7 +191,7 @@
   <div class='content'>
     <h2>strengths are also weaknesses</h2>
     
-    <p><textarea class='code' display='none' mode='shell'>$ ifconfig en1 | grep ether | awk '{print $NF}' | tr '[:lower:]' '[:upper:]'</textarea>
+    <p><textarea class='code' display='none' mode='shell'>$ ifconfig eth0 | grep HWaddr | awk '{print $NF}' | tr '[:lower:]' '[:upper:]'</textarea>
 </p>
     
     <table style='width: 100%'>
@@ -220,7 +227,7 @@
   <div class='content'>
     <h2>fixating on weakness becomes limitation</h2>
 
-<p><textarea class='code' display='none' mode='shell'>$ ifconfig en1 | grep ether | awk '{print $NF}' | tr '[:lower:]' '[:upper:]'</textarea>
+<p><textarea class='code' display='none' mode='shell'>$ ifconfig eth0 | grep HWaddr | awk '{print $NF}' | tr '[:lower:]' '[:upper:]'</textarea>
 </p>
 
 <table style='width: 100%'>
@@ -282,7 +289,7 @@
   <div class='content'>
     <h2>inverting limits</h2>
 
-<p><textarea class='code' display='none' mode='shell'>$ ifconfig en1 | grep ether | awk '{print $NF}' | tr '[:lower:]' '[:upper:]'</textarea>
+<p><textarea class='code' display='none' mode='shell'>$ ifconfig eth0 | grep HWaddr | awk '{print $NF}' | tr '[:lower:]' '[:upper:]'</textarea>
 </p>
 
 <table style='width: 100%'>
@@ -348,12 +355,12 @@
     
     <h3>before</h3>
     
-    <p><textarea class='code' display='none' mode='shell'>$ ifconfig en1 | grep ether | awk '{print $NF}' | tr '[:lower:]' '[:upper:]'</textarea>
+    <p><textarea class='code' display='none' mode='shell'>$ ifconfig eth0 | grep HWaddr | awk '{print $NF}' | tr '[:lower:]' '[:upper:]'</textarea>
 </p>
     
     <h3>after</h3>
     
-    <p><textarea class='code' display='none' mode='shell'>get_mac_address () {&#x000A;  ifconfig $1 | grep ether | lastcol | uppercase&#x000A;}&#x000A;&#x000A;lastcol () {&#x000A;  awk '{ print $NF }'&#x000A;}&#x000A;&#x000A;uppercase () {&#x000A;  tr '[:lower:]' '[:upper:]'&#x000A;}&#x000A;&#x000A;$ get_mac_address en1&#x000A;&#x000A;F8:1E:DF:E6:A9:13</textarea>
+    <p><textarea class='code' display='none' mode='shell'>get_mac_address () {&#x000A;  ifconfig $1 | grep HWaddr | lastcol | uppercase&#x000A;}&#x000A;&#x000A;lastcol () {&#x000A;  awk '{ print $NF }'&#x000A;}&#x000A;&#x000A;uppercase () {&#x000A;  tr '[:lower:]' '[:upper:]'&#x000A;}&#x000A;&#x000A;$ get_mac_address eth0&#x000A;&#x000A;F8:1E:DF:E6:A9:13</textarea>
 </p>
   </div>
   <div class='spacer bottom'></div>
@@ -363,7 +370,7 @@
   <div class='content'>
     <h2>composed method</h2>
 
-<p><textarea class='code' display='none' mode='shell'>get_mac_address () {&#x000A;  ifconfig $1 | grep ether | lastcol | uppercase&#x000A;}&#x000A;&#x000A;lastcol () {&#x000A;  awk '{ print $NF }'&#x000A;}&#x000A;&#x000A;uppercase () {&#x000A;  tr '[:lower:]' '[:upper:]'&#x000A;}</textarea>
+<p><textarea class='code' display='none' mode='shell'>get_mac_address () {&#x000A;  ifconfig $1 | grep HWaddr | lastcol | uppercase&#x000A;}&#x000A;&#x000A;lastcol () {&#x000A;  awk '{ print $NF }'&#x000A;}&#x000A;&#x000A;uppercase () {&#x000A;  tr '[:lower:]' '[:upper:]'&#x000A;}</textarea>
 </p>
 
 <h3>benefits</h3>
@@ -427,7 +434,7 @@
   <div class='content'>
     <h2>draft functions from command line</h2>
     
-    <p><textarea class='code' display='none' mode='shell'>$ ifconfig en1 | grep ether |  awk '{ print $NF }'&#x000A;&#x000A;00:0b:db:93:0a:08&#x000A;&#x000A;$ draft get_mac_address&#x000A;&#x000A;$ get_mac_address&#x000A;&#x000A;00:0b:db:93:0a:08</textarea>
+    <p><textarea class='code' display='none' mode='shell'>$ ifconfig eth0 | grep HWaddr |  awk '{ print $NF }'&#x000A;&#x000A;00:0b:db:93:0a:08&#x000A;&#x000A;$ draft get_mac_address&#x000A;&#x000A;$ get_mac_address&#x000A;&#x000A;00:0b:db:93:0a:08</textarea>
 </p>
   </div>
   <div class='spacer bottom'></div>
@@ -442,12 +449,12 @@
     
     <h3>opens definition in text editor</h3>
     
-    <p><textarea class='code' display='none' mode='shell'>get_mac_address ()&#x000A;{&#x000A;  ifconfig $1 | grep ether |  awk '{ print $NF }'&#x000A;}</textarea>
+    <p><textarea class='code' display='none' mode='shell'>get_mac_address ()&#x000A;{&#x000A;  ifconfig $1 | grep HWaddr |  awk '{ print $NF }'&#x000A;}</textarea>
 </p>
     
     <h3>re-loads function into memory on save</h3>
     
-    <p><textarea class='code' display='none' mode='shell'>$ get_mac_address en1&#x000A;&#x000A;00:0b:db:93:0a:08</textarea>
+    <p><textarea class='code' display='none' mode='shell'>$ get_mac_address eth0&#x000A;&#x000A;00:0b:db:93:0a:08</textarea>
 </p>
   </div>
   <div class='spacer bottom'></div>
@@ -455,11 +462,9 @@
     <section class='left slide'>
       <div class='spacer top'></div>
       <div class='content'>
-        <h2>draft / revise</h2>
+        <h2>demo: draft / revise</h2>
         
         <h3>use draft() and revise() for <strong>interactive-style function composition</strong> from the prompt</h3>
-        
-        <p><a href="http://ascii.io/a/1036">ascii.io (1:18)</a></p>
       </div>
       <div class='spacer bottom'></div>
     </section>
@@ -586,9 +591,11 @@
   <div class='spacer top'></div>
   <div class='content'>
     <h2>run-time introspection</h2>
-    
-    <p><textarea class='code' display='none' mode='shell'>$ typeset -f foo&#x000A;&#x000A;foo () {&#x000A;    REM 'a BASIC remark'&#x000A;    echo 'foo'&#x000A;}&#x000A;&#x000A;$ typeset -f foo | grep REM | lastcol&#x000A;&#x000A;'a BASIC remark'</textarea>
+
+<p><textarea class='code' display='none' mode='shell'>$ typeset -f foo&#x000A;&#x000A;foo () {&#x000A;    REM 'a BASIC remark'&#x000A;    echo 'foo'&#x000A;}&#x000A;&#x000A;$ typeset -f foo | grep REM | lastcol&#x000A;&#x000A;'a BASIC remark'</textarea>
 </p>
+
+<h3>key idea: code is also data</h3>
   </div>
   <div class='spacer bottom'></div>
 </section>
@@ -616,7 +623,7 @@
   <div class='content'>
     <h2>get_mac_address, reprised</h2>
     
-    <p><textarea class='code' display='none' mode='shell'>get_mac_address () {&#x000A;    about 'retrieves mac address for a given network interface'&#x000A;    param '1: network interface'&#x000A;    example '$ get_mac_address en1'&#x000A;    group 'network'&#x000A;&#x000A;    ifconfig $1 | grep ether | lastcol | uppercase&#x000A;  }</textarea>
+    <p><textarea class='code' display='none' mode='shell'>get_mac_address () {&#x000A;    about 'retrieves mac address for a given network interface'&#x000A;    param '1: network interface'&#x000A;    example '$ get_mac_address eth0'&#x000A;    group 'network'&#x000A;&#x000A;    ifconfig $1 | grep HWaddr | lastcol | uppercase&#x000A;  }</textarea>
 </p>
   </div>
   <div class='spacer bottom'></div>
@@ -646,7 +653,7 @@
   <div class='content'>
     <h2>putting metadata to work</h2>
     
-    <p><textarea class='code' display='none' mode='shell'>$ reference get_mac_address&#x000A;&#x000A;get_mac_address     retrieves mac address for a given network interface&#x000A;parameters:&#x000A;                    1: network interface&#x000A;examples:&#x000A;                    $ get_mac_address en1</textarea>
+    <p><textarea class='code' display='none' mode='shell'>$ reference get_mac_address&#x000A;&#x000A;get_mac_address     retrieves mac address for a given network interface&#x000A;parameters:&#x000A;                    1: network interface&#x000A;examples:&#x000A;                    $ get_mac_address eth0</textarea>
 </p>
     
     <h3>use case: api reference</h3>
@@ -682,7 +689,7 @@
   <div class='content'>
     <h2>persist shell functions with metadata</h2>
     
-    <p><textarea class='code' display='none' mode='shell'>$ write get_mac_address lastcol uppercase > getmac.sh&#x000A;$ echo "get_mac_address $1" >> getmac.sh&#x000A;$ sh ./getmac.sh en1&#x000A;&#x000A;F8:1E:DF:E6:A9:13</textarea>
+    <p><textarea class='code' display='none' mode='shell'>$ write get_mac_address lastcol uppercase > getmac.sh&#x000A;$ echo "get_mac_address $1" >> getmac.sh&#x000A;$ sh ./getmac.sh eth0&#x000A;&#x000A;F8:1E:DF:E6:A9:13</textarea>
 </p>
   </div>
   <div class='spacer bottom'></div>
@@ -690,13 +697,11 @@
     <section class='slide'>
       <div class='spacer top'></div>
       <div class='content'>
-        <h2>composure</h2>
+        <h2>demo: composure</h2>
         
         <p><img src="images/composure.png" alt="composure - public domain 2012" /></p>
         
-        <h3>demo: simple network monitor</h3>
-        
-        <p><a href="http://ascii.io/a/476">ascii.io (4 minutes)</a></p>
+        <h3>simple network monitor</h3>
       </div>
       <div class='spacer bottom'></div>
     </section>

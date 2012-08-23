@@ -23,10 +23,20 @@
  more generally applicable, and if they don't directly apply to your situation,
  my hope is that they will serve as food for thought.
 
+!SLIDE left
+
+## what do you mean, shell?
+
+### servant of two masters
+
+* CLI - command interpreter, exposes operating system
+* script interpreter - programming interface, batches commands
+
+![bash - public domain](images/bash.png)
 
 !SLIDE left
 
-## Unix is famously difficult to master...
+## Unix shell is famously difficult to master...
 
 * steep learning curve
 * arcane, terse commands
@@ -35,7 +45,6 @@
 > Unix never says 'please'.
 >
 > -- Rob Pike
-
 
 !SLIDE
 
@@ -62,37 +71,36 @@ Unix hasnt killed anyone. Yet.
 >
 > -- Doug McIlroy, the inventor of Unix pipes (1972)
 
+
 !SLIDE left
+## pipes - Unix's killer app
 
-## what do you mean, shell?
-
-### servant of two masters
-
-* CLI - command interpreter, exposes operating system
-* script interpreter - programming interface, batches commands
-
-![zsh - © CC- (?) 2012 Nirakka](images/zsh.png)
+![Unix Pipelines - public domain, wikimedia 2009 TylzaeL](images/pipeline.png)
 
 !SLIDE left
 ## example: what's my MAC address?
 
 @@@ shell
-$ ifconfig en1
+$ ifconfig eth0
 
-en1: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
-        ether f8:1e:df:e6:a9:13
-        inet 10.80.80.240 netmask 0xffff0000 broadcast 10.80.255.255
-        media: autoselect
-        status: active
+eth0      Link encap:Ethernet  HWaddr f8:1e:df:e6:a9:13
+          inet addr:10.80.100.35  Bcast:10.80.100.255  Mask:255.255.0.0
+          inet6 addr: fe80::20b:dbff:fe93:a08/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:408752002 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:388745488 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000
+          RX bytes:123203059 (123.2 MB)  TX bytes:2194999939 (2.1 GB)
+          Interrupt:16
 @@@
 
 !SLIDE left
 ## example: what's my MAC address?
 
 @@@ shell
-  $ ifconfig en1 | grep ether
+  $ ifconfig eth0 | grep HWaddr
 
-        ether f8:1e:df:e6:a9:13
+eth0      Link encap:Ethernet  HWaddr f8:1e:df:e6:a9:13
 @@@
 
 'grep' shows only lines that contain some matching expression.
@@ -101,7 +109,7 @@ en1: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
 ## example: what's my MAC address?
 
 @@@ shell
-  $ ifconfig en1 | grep ether | awk '{print $NF}'
+  $ ifconfig eth0 | grep HWaddr | awk '{print $NF}'
 
   f8:1e:df:e6:a9:13
 @@@
@@ -112,7 +120,7 @@ en1: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
 ## example: what's my MAC address?
 
 @@@ shell
-  $ ifconfig en1 | grep ether | awk '{print $NF}' | tr '[:lower:]' '[:upper:]'
+  $ ifconfig eth0 | grep HWaddr | awk '{print $NF}' | tr '[:lower:]' '[:upper:]'
 
   F8:1E:DF:E6:A9:13
 @@@
@@ -120,15 +128,13 @@ en1: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
 'tr' _translates_ one set of characters to another.
 
 !SLIDE
-## mac address demo
-
-[ascii.io (30 seconds)](http://ascii.io/a/1035)
+## demo: mac address
 
 !SLIDE left
 ## strengths of the Unix model
 
 @@@ shell
-  $ ifconfig en1 | grep ether | awk '{print $NF}' | tr '[:lower:]' '[:upper:]'
+  $ ifconfig eth0 | grep HWaddr | awk '{print $NF}' | tr '[:lower:]' '[:upper:]'
 @@@
 
 ### strengths
@@ -141,7 +147,7 @@ en1: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
 ## strengths are also weaknesses
 
 @@@ shell
-  $ ifconfig en1 | grep ether | awk '{print $NF}' | tr '[:lower:]' '[:upper:]'
+  $ ifconfig eth0 | grep HWaddr | awk '{print $NF}' | tr '[:lower:]' '[:upper:]'
 @@@
 
 <table style='width: 100%'>
@@ -174,7 +180,7 @@ en1: flags=8863<UP,BROADCAST,SMART,RUNNING,SIMPLEX,MULTICAST> mtu 1500
 ## fixating on weakness becomes limitation
 
 @@@ shell
-  $ ifconfig en1 | grep ether | awk '{print $NF}' | tr '[:lower:]' '[:upper:]'
+  $ ifconfig eth0 | grep HWaddr | awk '{print $NF}' | tr '[:lower:]' '[:upper:]'
 @@@
 
 <table style='width: 100%'>
@@ -225,7 +231,7 @@ Insight:
 ## inverting limits
 
 @@@ shell
-  $ ifconfig en1 | grep ether | awk '{print $NF}' | tr '[:lower:]' '[:upper:]'
+  $ ifconfig eth0 | grep HWaddr | awk '{print $NF}' | tr '[:lower:]' '[:upper:]'
 @@@
 
 <table style='width: 100%'>
@@ -284,13 +290,13 @@ striving for **readable**, **understandable** code often results in many small, 
 
 ### before
 @@@ shell
-  $ ifconfig en1 | grep ether | awk '{print $NF}' | tr '[:lower:]' '[:upper:]'
+  $ ifconfig eth0 | grep HWaddr | awk '{print $NF}' | tr '[:lower:]' '[:upper:]'
 @@@
 
 ### after
 @@@ shell
   get_mac_address () {
-    ifconfig $1 | grep ether | lastcol | uppercase
+    ifconfig $1 | grep HWaddr | lastcol | uppercase
   }
 
   lastcol () {
@@ -301,7 +307,7 @@ striving for **readable**, **understandable** code often results in many small, 
     tr '[:lower:]' '[:upper:]'
   }
 
-  $ get_mac_address en1
+  $ get_mac_address eth0
 
   F8:1E:DF:E6:A9:13
 @@@
@@ -311,7 +317,7 @@ striving for **readable**, **understandable** code often results in many small, 
 
 @@@ shell
   get_mac_address () {
-    ifconfig $1 | grep ether | lastcol | uppercase
+    ifconfig $1 | grep HWaddr | lastcol | uppercase
   }
 
   lastcol () {
@@ -363,7 +369,7 @@ tensions between _interactive_ CLI and _batch_ script interpreter:
 ## draft functions from command line
 
 @@@ shell
-$ ifconfig en1 | grep ether |  awk '{ print $NF }'
+$ ifconfig eth0 | grep HWaddr |  awk '{ print $NF }'
 
 00:0b:db:93:0a:08
 
@@ -386,24 +392,22 @@ $ revise get_mac_address
 @@@ shell
 get_mac_address ()
 {
-  ifconfig $1 | grep ether |  awk '{ print $NF }'
+  ifconfig $1 | grep HWaddr |  awk '{ print $NF }'
 }
 @@@
 
 ### re-loads function into memory on save
 
 @@@ shell
-$ get_mac_address en1
+$ get_mac_address eth0
 
 00:0b:db:93:0a:08
 @@@
 
 !SLIDE left
-## draft / revise
+## demo: draft / revise
 
 ### use draft() and revise() for **interactive-style function composition** from the prompt
-
-[ascii.io (1:18)](http://ascii.io/a/1036)
 
 !SLIDE left
 ## empowering question
@@ -532,6 +536,8 @@ $ typeset -f foo | grep REM | lastcol
 'a BASIC remark'
 @@@
 
+### key idea: code is also data
+
 !SLIDE
 ## functional metadata
 
@@ -557,10 +563,10 @@ cite about author example group param version
  get_mac_address () {
     about 'retrieves mac address for a given network interface'
     param '1: network interface'
-    example '$ get_mac_address en1'
+    example '$ get_mac_address eth0'
     group 'network'
 
-    ifconfig $1 | grep ether | lastcol | uppercase
+    ifconfig $1 | grep HWaddr | lastcol | uppercase
   }
 @@@
 
@@ -601,7 +607,7 @@ get_mac_address     retrieves mac address for a given network interface
 parameters:
                     1: network interface
 examples:
-                    $ get_mac_address en1
+                    $ get_mac_address eth0
 @@@
 
 ### use case: api reference
@@ -636,19 +642,15 @@ network
 @@@ shell
 $ write get_mac_address lastcol uppercase > getmac.sh
 $ echo "get_mac_address $1" >> getmac.sh
-$ sh ./getmac.sh en1
+$ sh ./getmac.sh eth0
 
 F8:1E:DF:E6:A9:13
 @@@
 
 !SLIDE
-## composure
+## demo: composure
 
-![composure - public domain 2012](images/composure.png)
-
-### demo: simple network monitor
-
-[ascii.io (4 minutes)](http://ascii.io/a/476)
+### simple network monitor
 
 !SLIDE left
 ## links
