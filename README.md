@@ -1,7 +1,7 @@
 ## shellcraft: building a better command line
 
 
-See [slides.html]().
+See [slides.html](https://github.com/erichs/presentation-shellcraft/blob/master/slides.html).
 
 ###  presentation slides compiled using [deck.js](https://github.com/imakewebthings/deck.js) and [keydown](https://github.com/infews/keydown).
 
