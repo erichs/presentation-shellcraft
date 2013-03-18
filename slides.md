@@ -12,16 +12,34 @@
 ### [@erichs](http://github.com/erichs)/GitHub
 
 !NOTES
- So, I think youre not supposed to start out a presentation with an apology, but Im going to anyway... this talk is an apology for Unix.
- I mean that both in the sense of expressing regret, and in the sense of defending or justifying.
+ I'm calling this talk 'Shellcraft: building a better command line'. That's our
+ goal, that's what we'll be doing today.
 
- A lot of folks, and I definitely include myself here, pretty regularly fall victim to some negative cultural assumptions and technical anti-patterns in the Unix shell.
- I wanted to highlight a few of those issues, and take a look at some methods I've found to address them.
+ On a slightly deeper level, this talk is an apology for Unix.
+
+ I mean that both in the sense of expressing regret, and in the sense of
+ defending or justifying.
+
+ This apology comes in the form of an invitation: I invite you to examine with
+ me how changing our own perspectives a little allows us to see some old
+ technology in a new way.
+
+ When I say old technology, I mean early 1970s, which in computing terms puts
+ us somewhere roughly in the Paleozoic era.
 
  This talk is going to delve into some technical areas, but I won't assume you
  have much prior experience with Unix.  Many of the ideas presented here may be
- more generally applicable, and if they don't directly apply to your situation,
- my hope is that they will serve as food for thought.
+ more generally applicable, and even if they don't directly apply to your situation,
+ my hope is that they will serve you as food for thought.
+
+ I'm going to ask for your help up front, here: if you feel I've glossed over
+ something, or something I say doesn't make sense, PLEASE stop me, I'd be
+ delighted if you asked a question.
+
+ A lot of folks, and I definitely include myself here, pretty regularly fall
+ victim to some negative cultural beliefs and technical anti-patterns in
+ the Unix shell.  I wanted to shine some light a few of those issues, and take
+ a look at some methods I've found to address them.
 
 !SLIDE left
 
@@ -219,13 +237,40 @@ Bernhardt's talk inspired me to revisit my approach to using the shell.
 Insight:
 ### statements freeze perspectives, questions open them up.
 
+!NOTES
+at the outset I said I wanted to examine how changing our perspectives can
+allow us to see old technology in new ways. If you'll permit me, I'm going to
+wax philosophical for a minute
+
+I've bumped up against a limiting belief that I find dissatisfying.  I'd like
+to shake up my perspective, get some cognitive space to see things from a new
+angle.
+
+That's easy to say, but How do you do that?
+
+Here's a trick I've learned.
+
+It works by noticing that statements freeze and limit perspectives. Beliefs are
+statements, assertions about what we think is objectively true.
+
+questions are orthogonal to statements, they move in a different direction entirely.
+
+This is sort of a Jedi mind trick. Before you get too excited, it doesn't work
+on other people.
+
+ready?
 
 !SLIDE
+
 ## jedi mind trick: inverting limits
 
 ![AURYN - © CC- (?) 2000 Tropican](images/AURYN.png)
 
 ### invert a limiting belief, and turn it into an open-ended question
+
+!NOTES
+
+try it out sometime. just remember, simple is not always easy.
 
 !SLIDE left
 ## inverting limits
@@ -270,11 +315,16 @@ Insight:
 * documented
 
 !NOTES
-readability includes things like whitespace/aesthetics (Python gets this right to a fault), narrative flow, method length and style
+readability includes things like whitespace/aesthetics (Python gets this right
+to a fault), narrative flow, method length and style
 
-understandability includes things like comprehension, intention-revealing names, method length, kiss principle. measured in WTFs/m.
+understandability includes things like comprehension, intention-revealing
+names, method length, adherence to principles: kiss, DRY, SRP. measured in
+WTFs/m.
 
-documentation covers intention-revealing names, comments & inline documentation, version control comments and history (metadata), and externally generated doc (Doxygen, javadoc)
+documentation covers intention-revealing names, comments & inline
+documentation, tests, version control comments and history, tests, externally
+generated doc (Doxygen, javadoc), and tests.
 
 !SLIDE left
 ## composed method
