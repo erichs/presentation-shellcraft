@@ -1,34 +1,16 @@
-# shellcraft
+# composure
 
 !SLIDE
 
-# Shellcraft
-## building a better command line
+# fearless shell
+## coding with composure
 
 ![Shell - public domain](images/shell.jpg)
 
 ### [@erichs](http://github.com/erichs)/GitHub
 
 !NOTES
- I'm calling this talk 'Shellcraft: building a better command line'. That's our
- goal, that's what we'll be doing today.
-
- I invite you to examine with me how changing our own perspectives a little
- allows us to see some old technology in a new way.
-
- When I say old technology, I mean early 1970s, which in computing terms puts
- us somewhere roughly in the Paleozoic era.
-
- This talk is going to delve into some technical areas, but I won't assume you
- have much prior experience with Unix.  Many of the ideas presented here may be
- more generally applicable, and even if they don't directly apply to your situation,
- my hope is that they will serve you as food for thought.
-
- I'm going to ask for your help up front, here: if you feel I've glossed over
- something, or something I say doesn't make sense, PLEASE stop me, I'd be
- delighted if you asked a question.
-
- A lot of folks, and I definitely include myself here, pretty regularly fall
+A lot of folks, and I definitely include myself here, pretty regularly fall
  victim to some negative cultural beliefs and technical anti-patterns in
  the Unix shell.  I wanted to shine some light a few of those issues, and take
  a look at some methods I've found to address them.
