@@ -35,8 +35,6 @@
         
         <p><img src="images/shell.jpg" alt="Shell - public domain" /></p>
         
-        <h3>(an apology for Unix)</h3>
-        
         <h3><a href="http://github.com/erichs">@erichs</a>/GitHub</h3>
       </div>
       <div class='spacer bottom'></div>
@@ -61,7 +59,7 @@
     <section class='left slide'>
       <div class='spacer top'></div>
       <div class='content'>
-        <h2>Unix shell is famously difficult to master...</h2>
+        <h2>Unix shell is somewhat difficult to master...</h2>
         
         <ul>
         <li>steep learning curve</li>
@@ -115,56 +113,10 @@
       </div>
       <div class='spacer bottom'></div>
     </section>
-    <section class='left slide'>
-  <div class='spacer top'></div>
-  <div class='content'>
-    <h2>example: what's my MAC address?</h2>
-    
-    <p><textarea class='code' display='none' mode='shell'>$ ifconfig eth0&#x000A;&#x000A;eth0      Link encap:Ethernet  HWaddr f8:1e:df:e6:a9:13&#x000A;          inet addr:10.80.100.35  Bcast:10.80.100.255  Mask:255.255.0.0&#x000A;          inet6 addr: fe80::20b:dbff:fe93:a08/64 Scope:Link&#x000A;          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1&#x000A;          RX packets:408752002 errors:0 dropped:0 overruns:0 frame:0&#x000A;          TX packets:388745488 errors:0 dropped:0 overruns:0 carrier:0&#x000A;          collisions:0 txqueuelen:1000&#x000A;          RX bytes:123203059 (123.2 MB)  TX bytes:2194999939 (2.1 GB)&#x000A;          Interrupt:16</textarea>
-</p>
-  </div>
-  <div class='spacer bottom'></div>
-</section>
-    <section class='left slide'>
-  <div class='spacer top'></div>
-  <div class='content'>
-    <h2>example: what's my MAC address?</h2>
-
-<p><textarea class='code' display='none' mode='shell'>$ ifconfig eth0 | grep HWaddr&#x000A;&#x000A;eth0      Link encap:Ethernet  HWaddr f8:1e:df:e6:a9:13</textarea>
-</p>
-
-<p>'grep' shows only lines that contain some matching expression.</p>
-  </div>
-  <div class='spacer bottom'></div>
-</section>
-    <section class='left slide'>
-  <div class='spacer top'></div>
-  <div class='content'>
-    <h2>example: what's my MAC address?</h2>
-    
-    <p><textarea class='code' display='none' mode='shell'>$ ifconfig eth0 | grep HWaddr | awk '{print $NF}'&#x000A;&#x000A;f8:1e:df:e6:a9:13</textarea>
-</p>
-    
-    <p>'awk' is grep on steroids.</p>
-  </div>
-  <div class='spacer bottom'></div>
-</section>
-    <section class='left slide'>
-  <div class='spacer top'></div>
-  <div class='content'>
-    <h2>example: what's my MAC address?</h2>
-    
-    <p><textarea class='code' display='none' mode='shell'>$ ifconfig eth0 | grep HWaddr | awk '{print $NF}' | tr '[:lower:]' '[:upper:]'&#x000A;&#x000A;F8:1E:DF:E6:A9:13</textarea>
-</p>
-    
-    <p>'tr' <em>translates</em> one set of characters to another.</p>
-  </div>
-  <div class='spacer bottom'></div>
-</section>
     <section class='slide'>
       <div class='spacer top'></div>
       <div class='content'>
-        <h2>demo: mac address</h2>
+        <h2>demo: find my mac address</h2>
       </div>
       <div class='spacer bottom'></div>
     </section>
@@ -258,29 +210,16 @@
   </div>
   <div class='spacer bottom'></div>
 </section>
-    <section class='left slide'>
-      <div class='spacer top'></div>
-      <div class='content'>
-        <h2>changing POV</h2>
-        
-        <p>Bernhardt's talk inspired me to revisit my approach to using the shell.</p>
-        
-        <p>&nbsp;</p>
-        
-        <p>Insight:</p>
-        
-        <h3>statements freeze perspectives, questions open them up.</h3>
-      </div>
-      <div class='spacer bottom'></div>
-    </section>
     <section class='slide'>
       <div class='spacer top'></div>
       <div class='content'>
-        <h2>jedi mind trick: inverting limits</h2>
+        <h2>A philsophical interlude</h2>
         
         <p><img src="images/AURYN.png" alt="AURYN - © CC- (?) 2000 Tropican" /></p>
         
-        <h3>invert a limiting belief, and turn it into an open-ended question</h3>
+        <ul>
+        <li class="slide">try inverting a limiting belief, and turn it into an open-ended question</li>
+        </ul>
       </div>
       <div class='spacer bottom'></div>
     </section>
@@ -351,7 +290,7 @@
   <div class='content'>
     <p>&nbsp;</p>
     
-    <h2>apply composed method</h2>
+    <h2>apply composed method pattern</h2>
     
     <h3>before</h3>
     
@@ -368,7 +307,7 @@
     <section class='left slide'>
   <div class='spacer top'></div>
   <div class='content'>
-    <h2>composed method</h2>
+    <h2>composed method, applied</h2>
 
 <p><textarea class='code' display='none' mode='shell'>get_mac_address () {&#x000A;  ifconfig $1 | grep HWaddr | lastcol | uppercase&#x000A;}&#x000A;&#x000A;lastcol () {&#x000A;  awk '{ print $NF }'&#x000A;}&#x000A;&#x000A;uppercase () {&#x000A;  tr '[:lower:]' '[:upper:]'&#x000A;}</textarea>
 </p>
@@ -430,36 +369,6 @@
       <div class='spacer bottom'></div>
     </section>
     <section class='left slide'>
-  <div class='spacer top'></div>
-  <div class='content'>
-    <h2>draft functions from command line</h2>
-    
-    <p><textarea class='code' display='none' mode='shell'>$ ifconfig eth0 | grep HWaddr |  awk '{ print $NF }'&#x000A;&#x000A;00:0b:db:93:0a:08&#x000A;&#x000A;$ draft get_mac_address&#x000A;&#x000A;$ get_mac_address&#x000A;&#x000A;00:0b:db:93:0a:08</textarea>
-</p>
-  </div>
-  <div class='spacer bottom'></div>
-</section>
-    <section class='left slide'>
-  <div class='spacer top'></div>
-  <div class='content'>
-    <h2>revise functions from command line</h2>
-    
-    <p><textarea class='code' display='none' mode='shell'>$ revise get_mac_address</textarea>
-</p>
-    
-    <h3>opens definition in text editor</h3>
-    
-    <p><textarea class='code' display='none' mode='shell'>get_mac_address ()&#x000A;{&#x000A;  ifconfig $1 | grep HWaddr |  awk '{ print $NF }'&#x000A;}</textarea>
-</p>
-    
-    <h3>re-loads function into memory on save</h3>
-    
-    <p><textarea class='code' display='none' mode='shell'>$ get_mac_address eth0&#x000A;&#x000A;00:0b:db:93:0a:08</textarea>
-</p>
-  </div>
-  <div class='spacer bottom'></div>
-</section>
-    <section class='left slide'>
       <div class='spacer top'></div>
       <div class='content'>
         <h2>demo: draft / revise</h2>
@@ -499,6 +408,18 @@
       <div class='spacer bottom'></div>
     </section>
     <section class='left slide'>
+  <div class='spacer top'></div>
+  <div class='content'>
+    <h2>auto-load shell functions</h2>
+
+<ul>
+<li>small code snippet in shell RC file</li>
+<li>functions feel less ephemeral</li>
+</ul>
+  </div>
+  <div class='spacer bottom'></div>
+</section>
+    <section class='left slide'>
       <div class='spacer top'></div>
       <div class='content'>
         <h2>empowering question</h2>
@@ -518,7 +439,7 @@
   <div class='content'>
     <h2>towards better documentation</h2>
     
-    <p>Comments are helpful. Shell scripts allow them, but in-memory functions don't.</p>
+    <p>Shell scripts allow #comments, but in-memory functions don't.</p>
     
     <p><textarea class='code' display='none' mode='shell'>$ foo () {&#x000A;    # this is a comment&#x000A;    echo 'foo'&#x000A;}&#x000A;&#x000A;$ typeset -f foo&#x000A;&#x000A;foo () {&#x000A;    echo 'foo'&#x000A;}</textarea>
 </p>
@@ -563,7 +484,7 @@
   <div class='content'>
     <h2>a personal challenge</h2>
     
-    <p><textarea class='code' display='none' mode='shell'>REM () {&#x000A;    :&#x000A;}&#x000A;&#x000A;foo () {&#x000A;    REM 'a BASIC remark'&#x000A;    echo 'foo'&#x000A;}&#x000A;&#x000A;$ typeset -f foo&#x000A;&#x000A;foo () {&#x000A;    REM 'a BASIC remark'&#x000A;    echo 'foo'&#x000A;}</textarea>
+    <p><textarea class='code' display='none' mode='shell'>REM () {&#x000A;    :&#x000A;}&#x000A;&#x000A;foo () {&#x000A;    REM a BASIC remark&#x000A;    echo 'foo'&#x000A;}&#x000A;&#x000A;$ typeset -f foo&#x000A;&#x000A;foo () {&#x000A;    REM a BASIC remark&#x000A;    echo 'foo'&#x000A;}</textarea>
 </p>
   </div>
   <div class='spacer bottom'></div>
@@ -609,15 +530,16 @@
       <div class='spacer bottom'></div>
     </section>
     <section class='left slide'>
-  <div class='spacer top'></div>
-  <div class='content'>
-    <h2>establish keyword convention</h2>
-    
-    <p><textarea class='code' display='none' mode='shell'># cite() magically builds metadata functions&#x000A;&#x000A;cite about author example group param version</textarea>
-</p>
-  </div>
-  <div class='spacer bottom'></div>
-</section>
+      <div class='spacer top'></div>
+      <div class='content'>
+        <h2>demo: cite / metafor</h2>
+        
+        <h3>use cite() to establish keywords</h3>
+        
+        <h3>use metafor() to retrieve metadata from functions</h3>
+      </div>
+      <div class='spacer bottom'></div>
+    </section>
     <section class='left slide'>
   <div class='spacer top'></div>
   <div class='content'>
@@ -699,8 +621,6 @@
       <div class='content'>
         <h2>demo: composure</h2>
         
-        <p><img src="images/composure.png" alt="composure - public domain 2012" /></p>
-        
         <h3>simple network monitor</h3>
       </div>
       <div class='spacer bottom'></div>
@@ -710,25 +630,19 @@
   <div class='content'>
     <h2>links</h2>
 
-<h3>blogs</h3>
-
-<p><a href="http://destroyallsoftware.com">Gary Bernhardt</a></p>
-
-<p><a href="http://www.threeriversinstitute.org/blog/">Kent Beck</a></p>
-
-<p><a href="http://martinfowler.com/">Martin Fowler</a></p>
-
 <h3>reference</h3>
+
+<p><a href="https://github.com/erichs/composure">erichs/composure</a></p>
 
 <p><a href="http://www.confreaks.com/videos/615-cascadiaruby2011-the-unix-chainsaw">The Unix Chainsaw (31 minutes)</a></p>
 
 <p><a href="http://amzn.com/0134514947">Blinn, Bruce. <em>Portable Shell Programming</em>. New Jersey: Prentice Hall, 1996.</a></p>
 
-<h3>tools</h3>
+<h3>blogs cited</h3>
 
-<p><a href="https://github.com/erichs/composure">erichs/composure</a></p>
+<p><a href="http://destroyallsoftware.com">Gary Bernhardt</a></p>
 
-<p><a href="http://rtomayko.github.com/shocco/">shocco - literate shell documentation</a></p>
+<p><a href="http://www.threeriversinstitute.org/blog/">Kent Beck</a></p>
   </div>
   <div class='spacer bottom'></div>
 </section>

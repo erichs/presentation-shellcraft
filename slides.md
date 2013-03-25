@@ -7,22 +7,14 @@
 
 ![Shell - public domain](images/shell.jpg)
 
-### (an apology for Unix)
-
 ### [@erichs](http://github.com/erichs)/GitHub
 
 !NOTES
  I'm calling this talk 'Shellcraft: building a better command line'. That's our
  goal, that's what we'll be doing today.
 
- On a slightly deeper level, this talk is an apology for Unix.
-
- I mean that both in the sense of expressing regret, and in the sense of
- defending or justifying.
-
- This apology comes in the form of an invitation: I invite you to examine with
- me how changing our own perspectives a little allows us to see some old
- technology in a new way.
+ I invite you to examine with me how changing our own perspectives a little
+ allows us to see some old technology in a new way.
 
  When I say old technology, I mean early 1970s, which in computing terms puts
  us somewhere roughly in the Paleozoic era.
@@ -54,7 +46,7 @@
 
 !SLIDE left
 
-## Unix shell is famously difficult to master...
+## Unix shell is somewhat difficult to master...
 
 * steep learning curve
 * arcane, terse commands
@@ -95,58 +87,8 @@ Unix hasnt killed anyone. Yet.
 
 ![Unix Pipelines - public domain, wikimedia 2009 TylzaeL](images/pipeline.png)
 
-!SLIDE left
-## example: what's my MAC address?
-
-@@@ shell
-$ ifconfig eth0
-
-eth0      Link encap:Ethernet  HWaddr f8:1e:df:e6:a9:13
-          inet addr:10.80.100.35  Bcast:10.80.100.255  Mask:255.255.0.0
-          inet6 addr: fe80::20b:dbff:fe93:a08/64 Scope:Link
-          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
-          RX packets:408752002 errors:0 dropped:0 overruns:0 frame:0
-          TX packets:388745488 errors:0 dropped:0 overruns:0 carrier:0
-          collisions:0 txqueuelen:1000
-          RX bytes:123203059 (123.2 MB)  TX bytes:2194999939 (2.1 GB)
-          Interrupt:16
-@@@
-
-!SLIDE left
-## example: what's my MAC address?
-
-@@@ shell
-  $ ifconfig eth0 | grep HWaddr
-
-eth0      Link encap:Ethernet  HWaddr f8:1e:df:e6:a9:13
-@@@
-
-'grep' shows only lines that contain some matching expression.
-
-!SLIDE left
-## example: what's my MAC address?
-
-@@@ shell
-  $ ifconfig eth0 | grep HWaddr | awk '{print $NF}'
-
-  f8:1e:df:e6:a9:13
-@@@
-
-'awk' is grep on steroids.
-
-!SLIDE left
-## example: what's my MAC address?
-
-@@@ shell
-  $ ifconfig eth0 | grep HWaddr | awk '{print $NF}' | tr '[:lower:]' '[:upper:]'
-
-  F8:1E:DF:E6:A9:13
-@@@
-
-'tr' _translates_ one set of characters to another.
-
 !SLIDE
-## demo: mac address
+## demo: find my mac address
 
 !SLIDE left
 ## strengths of the Unix model
@@ -227,15 +169,15 @@ eth0      Link encap:Ethernet  HWaddr f8:1e:df:e6:a9:13
 </tr>
 </table>
 
-!SLIDE left
-## changing POV
+!SLIDE
 
-Bernhardt's talk inspired me to revisit my approach to using the shell.
+## A philsophical interlude
 
-&nbsp;
+![AURYN - © CC- (?) 2000 Tropican](images/AURYN.png)
 
-Insight:
-### statements freeze perspectives, questions open them up.
+<ul>
+<li class="slide">try inverting a limiting belief, and turn it into an open-ended question</li>
+</ul>
 
 !NOTES
 at the outset I said I wanted to examine how changing our perspectives can
@@ -248,29 +190,9 @@ angle.
 
 That's easy to say, but How do you do that?
 
-Here's a trick I've learned.
-
-It works by noticing that statements freeze and limit perspectives. Beliefs are
-statements, assertions about what we think is objectively true.
-
-questions are orthogonal to statements, they move in a different direction entirely.
-
-This is sort of a Jedi mind trick. Before you get too excited, it doesn't work
-on other people.
-
-ready?
-
-!SLIDE
-
-## jedi mind trick: inverting limits
-
-![AURYN - © CC- (?) 2000 Tropican](images/AURYN.png)
-
-### invert a limiting belief, and turn it into an open-ended question
-
-!NOTES
-
-try it out sometime. just remember, simple is not always easy.
+I'm sure there are many ways to deal with limiting beliefs. I'm not a trained
+psychologist, so I tried the simplest thing that could possibly work.  Here's
+what I came up with:
 
 !SLIDE left
 ## inverting limits
@@ -336,7 +258,7 @@ striving for **readable**, **understandable** code often results in many small, 
 
 !SLIDE left
 &nbsp;
-## apply composed method
+## apply composed method pattern
 
 ### before
 @@@ shell
@@ -363,7 +285,7 @@ striving for **readable**, **understandable** code often results in many small, 
 @@@
 
 !SLIDE left
-## composed method
+## composed method, applied
 
 @@@ shell
   get_mac_address () {
@@ -416,45 +338,6 @@ tensions between _interactive_ CLI and _batch_ script interpreter:
 ### blur the lines between prompt and script
 
 !SLIDE left
-## draft functions from command line
-
-@@@ shell
-$ ifconfig eth0 | grep HWaddr |  awk '{ print $NF }'
-
-00:0b:db:93:0a:08
-
-$ draft get_mac_address
-
-$ get_mac_address
-
-00:0b:db:93:0a:08
-@@@
-
-!SLIDE left
-## revise functions from command line
-
-@@@ shell
-$ revise get_mac_address
-@@@
-
-### opens definition in text editor
-
-@@@ shell
-get_mac_address ()
-{
-  ifconfig $1 | grep HWaddr |  awk '{ print $NF }'
-}
-@@@
-
-### re-loads function into memory on save
-
-@@@ shell
-$ get_mac_address eth0
-
-00:0b:db:93:0a:08
-@@@
-
-!SLIDE left
 ## demo: draft / revise
 
 ### use draft() and revise() for **interactive-style function composition** from the prompt
@@ -478,6 +361,12 @@ $ get_mac_address eth0
 * share functions with team via shared repo access
 
 !SLIDE left
+## auto-load shell functions
+
+* small code snippet in shell RC file
+* functions feel less ephemeral
+
+!SLIDE left
 ## empowering question
 
 **what would beautiful shell look like?**
@@ -489,7 +378,7 @@ $ get_mac_address eth0
 !SLIDE left
 ## towards better documentation
 
-Comments are helpful. Shell scripts allow them, but in-memory functions don't.
+Shell scripts allow #comments, but in-memory functions don't.
 
 @@@ shell
   $ foo () {
@@ -505,8 +394,8 @@ Comments are helpful. Shell scripts allow them, but in-memory functions don't.
 @@@
 
 !NOTES
-you could argue that storing comments in loaded shell functions is meaningless, but it turns out to be a worthwhile endeavor.
-'
+you could argue that storing comments in loaded shell functions is meaningless,
+but it turns out to be a worthwhile endeavor.  '
 
 !SLIDE left
 ## towards better documentation
@@ -542,14 +431,14 @@ REM () {
 }
 
 foo () {
-    REM 'a BASIC remark'
+    REM a BASIC remark
     echo 'foo'
 }
 
 $ typeset -f foo
 
 foo () {
-    REM 'a BASIC remark'
+    REM a BASIC remark
     echo 'foo'
 }
 @@@
@@ -594,17 +483,18 @@ $ typeset -f foo | grep REM | lastcol
 ### key/value metadata for shell functions!
 
 !NOTES
- One side-effect of using functional metadata is that you can intentionally override those functions to produce side-effects:
-logging, debug print statments, keeping statistics, copying files, whatever, without modifying your existing code.
+ reap all the standard benefits of the indirection layer:
+ One side-effect of using functional metadata is that you can intentionally
+ override those functions to produce side-effects: logging, debug print
+ statments, keeping statistics, copying files, whatever, without modifying your
+ existing code.
 
 !SLIDE left
-## establish keyword convention
+## demo: cite / metafor
 
-@@@ shell
-# cite() magically builds metadata functions
+### use cite() to establish keywords
 
-cite about author example group param version
-@@@
+### use metafor() to retrieve metadata from functions
 
 !SLIDE left
 ## get_mac_address, reprised
@@ -705,19 +595,17 @@ F8:1E:DF:E6:A9:13
 !SLIDE left
 ## links
 
-### blogs
-[Gary Bernhardt](http://destroyallsoftware.com)
-
-[Kent Beck](http://www.threeriversinstitute.org/blog/)
-
-[Martin Fowler](http://martinfowler.com/)
-
 ### reference
+
+[erichs/composure](https://github.com/erichs/composure)
+
 [The Unix Chainsaw (31 minutes)](http://www.confreaks.com/videos/615-cascadiaruby2011-the-unix-chainsaw)
 
 [Blinn, Bruce. _Portable Shell Programming_. New Jersey: Prentice Hall, 1996.](http://amzn.com/0134514947)
 
-### tools
-[erichs/composure](https://github.com/erichs/composure)
+### blogs cited
 
-[shocco - literate shell documentation](http://rtomayko.github.com/shocco/)
+[Gary Bernhardt](http://destroyallsoftware.com)
+
+[Kent Beck](http://www.threeriversinstitute.org/blog/)
+
